@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+</head>
+<body>
+
+<button id="btn">发送请求</button>
+
+<script type="text/javascript" src="/static/lib/jquery/1.9.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+    var params = {name:'wangyining',age:23}
+    $('#btn').on('click',function(){
+        $.ajax({
+            type: 'get',
+            url:'/test/ajax',
+            //携带请求参数 data:'name=wangyining&age=23'
+            // data:{
+            //     name:'wangyining',
+            //     age:'23'
+            // },
+            data:JSON.stringify(params),
+            contentType:'application/json',
+            success: function(data){
+                    console.log(data);
+            },
+            error:function (err) {
+                console.log(err)
+            }
+        })
+    });
+</script>
+
+</body>
+</html>

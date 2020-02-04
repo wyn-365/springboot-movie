@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>在线影院订票管理系统</title>
+    <link rel="stylesheet" type="text/css"
+          href="../static/css/style.css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" type="text/css"
+          href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css"
+          href="../static/css/shopping-mall-index.css" th:href="@{/css/shopping-mall-index.css}"/>
+    <script type="text/javascript" src="../static/js/jquery.js" th:src="@{/js/jquery.js}"></script>
+    <script type="text/javascript" src="../static/js/zhonglin.js" th:src="@{/js/zhonglin.js}"></script>
+    <script type="text/javascript" src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+</head>
+<body>
+
+<header>
+    <!--top 开始-->
+    <div class="top">
+        <div class="top-con w1200">
+            <p class="t-con-l f-l">
+                您好，[<span th:text="${user}" style="color: red"></span>]欢迎来到在线影院订票管理系统
+            </p>
+                <ul class="t-con-r f-r">
+                    <li><a href="<%=path %>/qiantai/userinfo/userXinxi.jsp">个人中心</a></li>
+
+                    <li><a href="<%=path%>/myOrder.action">我的订单</a></li>
+                </ul>
+                <ul class="t-con-r f-r">
+                    <li><a href="#" th:href="@{/userRegister}">注册</a></li>
+                    <li><a href="#" th:href="@{/userLogin}">登录</a></li>
+                </ul>
+            <div style="clear:both;"></div>
+
+            <div style="clear: both;"></div>
+        </div>
+    </div>
+
+    <!--logo search 开始-->
+    <div class="hd-info1 w1200">
+        <div class="logo f-l">
+            <img th:src="@{/img/qiantai/login3.png}">
+        </div>
+        <div class="search f-r">
+            <div class="srh">
+                <form action="" method="post">
+                    <div class="ipt f-l">
+                        <input type="text" name="goodsName" style="width: 478px" placeholder="搜索电影..." ss-search-show="sp" />
+                    </div>
+                    <button class="f-r">
+                        搜 索
+                    </button>
+                </form>
+                <div style="clear: both;"></div>
+            </div>
+
+        </div>
+
+        <div style="clear: both;"></div>
+    </div>
+
+
+    <!--nav 开始-->
+    <div class="nav w1200">
+
+            <ul class="nav nav-tabs navbar-nav">
+            <li>
+                <a href="<%=path%>/index.action">首页</a>
+            </li>
+
+            <li th:each="catelog : ${catelogStat}">
+                    <a href="" th:href="@{'/findMovieByCatelog?id='+${catelog.id}}" th:text="${catelog.catelog_name}"></a>
+            </li>
+
+            <li role="presentation" class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">更多 <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                </ul>
+            </li>
+
+
+
+            <div style="clear: both;"></div>
+            </ul>
+        <div style="clear: both;"></div>
+
+    </div>
+</header>
+
+
+<!--banner 开始-->
+<div class="banner-box">
+    <div class="banner w1200">
+        <ul>
+            <li>
+                <a href="JavaScript:;"><img
+                        src="<%=path%>/qiantai/images/3333.png" th:src="@{/img/qiantai/3333.png}"/>
+                </a>
+            </li>
+            <li>
+                <a href="JavaScript:;"><img
+                        src="<%=path%>/qiantai/images/2222.png" th:src="@{/img/qiantai/2222.png}"/>
+                </a>
+            </li>
+            <li>
+                <a href="JavaScript:;"><img
+                        src="<%=path%>/qiantai/images/3333.png" th:src="@{/img/qiantai/3333.png}"/>
+                </a>
+            </li>
+            <li>
+                <a href="JavaScript:;"><img
+                        src="<%=path%>/qiantai/images/2222.png" th:src="@{/img/qiantai/2223.png}"/>
+                </a>
+            </li>
+            <li>
+                <a href="JavaScript:;"><img
+                        src="<%=path%>/qiantai/images/3333.png" th:src="@{/img/qiantai/3334.png}"/>
+                </a>
+            </li>
+            <li>
+                <a href="JavaScript:;"><img
+                        src="<%=path%>/qiantai/images/2222.png" th:src="@{/img/qiantai/3333.png}"/>
+                </a>
+            </li>
+            <div style="clear: both;"></div>
+        </ul>
+
+    </div>
+</div>
+
+
+<!--电影内容页面-->
+<div class="shopping-content w1200">
+    <div class="sp-con-info">
+        <h3 class="sp-info-tit">
+            <span>1F</span>最新上映
+        </h3>
+        <ul class="sp-info-r f-r">
+
+                <li th:each="movie : ${movieStat}">
+                    <div class="li-top">
+                        <a href="" th:href="@{'/findMovieById/'+${movie.id}}" class="li-top-tu"><img
+                            style="width: 180px;height: 236px;"	src="<%=path%>/${goods.goodsPic}" th:src="@{${movie.movie_pic}}"/>
+                        </a>
+                        <p class="jiage">
+                            <span class="sp1" th:text="${movie.movie_price}">￥</span>
+                        </p>
+                    </div>
+                    <p class="miaoshu" th:text="${movie.movie_name}">
+                        电影名称
+                    </p>
+                </li>
+
+
+
+        </ul>
+        <div style="clear: both;"></div>
+    </div>
+
+
+
+
+    <div class="sp-con-info">
+        <h3 class="sp-info-tit">
+            <span>2F</span>票房排行榜
+        </h3>
+
+        <ul class="sp-info-r f-r">
+
+
+                <li th:each="movie2 : ${movieStat2}">
+                    <div class="li-top">
+                        <a href="" th:href="@{'/findMovieById/'+${movie2.id}}" class="li-top-tu"><img
+                            style="width: 180px;height: 236px;"	src="<%=path%>/${goods.goodsPic}" th:src="@{${movie2.movie_pic}}"/>
+                        </a>
+                        <p class="jiage">
+                            <span class="sp1" th:text="${movie2.movie_price}">￥${goods.goodsShichangjia}</span>
+                        </p>
+                    </div>
+                    <p class="miaoshu" th:text="${movie2.movie_name}">
+                        电影名称
+                    </p>
+
+                </li>
+
+
+
+        </ul>
+        <div style="clear: both;"></div>
+    </div>
+</div>
+
+<form action="<%=path %>/addToCart.action" method="post" name="buy">
+    <input name="goodsId" type="hidden" id="goodsId"/>
+    <input name="quantity" type="hidden" id="quantity" value="1"/>
+
+</form>
+
+
+<!--底部footer-->
+<footer th:replace="common/footer :: footer">
+</footer>
+
+
+
+</body>
+
+</html>

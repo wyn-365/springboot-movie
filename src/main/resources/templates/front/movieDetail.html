@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <link rel="stylesheet" type="text/css"
+          href="<%=path%>/qiantai/css/style.css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" type="text/css"
+          href="../static/css/shopping-mall-index.css" th:href="@{/css/shopping-mall-index.css}"/>
+    <link rel="stylesheet" type="text/css"
+          href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}"/>
+    <script type="text/javascript" src="" th:src="@{/js/jquery.js}"></script>
+    <script type="text/javascript" src="" th:src="@{/js/zhonglin.js}"></script>
+    <script language="JavaScript" src="" th:src="@{/js/public.js}" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        function buy1()
+        {
+        <s:if test="#session.user==null">
+            alert("请先登录");
+        </s:if>
+        <s:else>
+            document.buy.submit();
+        </s:else>
+        }
+
+
+        function add_num1(){
+            document.getElementById("quantity").value++;
+
+        }
+        function red_num1(){
+            if (document.getElementById("quantity").value>1){
+                document.getElementById("quantity").value--;
+            }
+        }
+    </script>
+</head>
+
+<body style="position:relative;">
+
+<!--内容开始-->
+<div class="details w1200">
+    <div class="deta-info1">
+        <div class="dt-if1-l f-l">
+            <div class="dt-if1-datu">
+                <ul qie-da="">
+                    <li><a href="#"><img style="width: 359px;height: 351px;" th:src="@{${movieInfo.movie_pic}}" /></a></li>
+
+                    <div style="clear:both;"></div>
+                </ul>
+            </div>
+
+            <div class="dt-if1-fx">
+                <span> </span>
+
+            </div>
+        </div>
+
+        <div class="dt-if1-m f-l">
+            <form action="" th:action="@{/choose}" method="post" name="buy">
+                <input type="hidden" name="movieId" th:value="${movieInfo.id}"/>
+                <div class="dt-ifm-hd">
+                    <h3><a href="#"></a></h3>
+                    <h3>地区：<span th:text="${movieInfo.movie_zone_id}"></span></a></h3>
+                    <h3>播放影厅：<span th:text="${movieInfo.movie_yingting_id}"></span></a></h3>
+                    <h3>上映时间：<span th:text="${movieInfo.movie_time}"></span></a></h3>
+                </div>
+                <div class="dt-ifm-gojia">
+                    <dl>
+                        <dt>价格</dt>
+                        <dd>
+                            <p class="p1">
+                                <span class="sp1">¥：<span th:text="${movieInfo.movie_price}"></span>元</span>
+                            </p>
+
+                        </dd>
+                        <div style="clear:both;"></div>
+                    </dl>
+                </div>
+                <dl class="dt-ifm-spot">
+                    <dt>评分</dt>
+                    <dd>
+                        <P><span>五星</span></P>
+
+                    </dd>
+                    <div style="clear:both;"></div>
+                </dl>
+
+
+                <div class="dt-ifm-box4">
+
+                    <button style=" width:78px; height:28px; background-color:#EF9D09;margin-right:7px; font-size:12px; color:#fff; border:none; float:left; cursor:pointer;" type="submit"  value="在线选座"/>在线选座</button>
+
+                </div>
+            </form>
+        </div>
+
+        <div class="dt-if1-r f-r">
+
+
+        </div>
+        <div style="clear:both;"></div>
+    </div>
+
+    <div class="deta-info2">
+
+        <div class="deta-info2">
+
+            <div class="dt-if2-r f-r" style="width:100%">
+                <ul class="if2-tit2">
+                    <li class="current" com-det="dt1"><a href="JavaScript:;">电影简介</a></li>
+                    <li com-det="dt2"><a href="JavaScript:;">评论</a></li>
+                    <div style="clear:both;"></div>
+                </ul>
+                <div style="border:1px solid #DBDBDB;" com-det-show="dt1">
+                    <div class="if2-tu1">
+                        <span th:text="${movieInfo.movie_desc}"></span>
+                        <div style="clear:both;"></div>
+                    </div>
+                    <div class="if2-tu2">
+                        <div style="clear:both;"></div>
+                    </div>
+                    <div class="if2-tu3">
+                    </div>
+                    <ul class="if2-tu4">
+
+                        <div style="clear:both;"></div>
+                    </ul>
+                </div>
+                <div style="display:none;" com-det-show="dt2">
+
+                    <div class="if2-r-box3">
+                        <c:forEach items="${plist}" var="pingjia">
+                            <dl>
+
+                                <dd>
+                                    <a href="#">${pingjia.plr}</a>
+                                    <p class="b3-p1">${pingjia.plnr}</p>
+                                    <p class="b3-p2">${pingjia.plsj}</p>
+
+
+                                </dd>
+                                <div style="clear:both;"></div>
+                            </dl>
+                        </c:forEach>
+
+
+                    </div>  </div>
+
+            </div>
+            <div style="clear:both;"></div>
+        </div>
+    </div>
+</div>
+<!--底部footer-->
+<footer th:replace="common/footer :: footer">
+</footer>
+</body>
+</html>

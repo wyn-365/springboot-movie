@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <head>
+        <meta http-equiv="pragma" content="no-cache" />
+        <meta http-equiv="cache-control" content="no-cache" />
+        <meta http-equiv="expires" content="0" />
+        <meta http-equiv="keywords" content="keyword1,keyword2,keyword3" />
+        <meta http-equiv="description" content="This is my page" />
+        <link rel="stylesheet" type="text/css"
+              href="<%=path%>/qiantai/css/style.css" th:href="@{/css/style.css}"/>
+        <link rel="stylesheet" type="text/css"
+              href="../static/css/shopping-mall-index.css" th:href="@{/css/shopping-mall-index.css}"/>
+        <link rel="stylesheet" type="text/css"
+              href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}"/>
+        <script language="JavaScript" src="<%=path %>/js/public.js" th:src="@{/js/public.js}" type="text/javascript"></script>
+        <script type="text/javascript">
+            function buy1()
+            {
+            <s:if test="#session.user==null">
+                alert("请先登录");
+            </s:if>
+            <s:else>
+                if(document.buy.quantity.value=="")
+                {
+                    alert("请输入购买数量");
+                    return false;
+                }
+                document.buy.submit();
+            </s:else>
+            }
+        </script>
+
+
+        <script type="text/javascript">
+            function buy1(goodid)
+            {
+
+            <c:if test="${sessionScope.user==null}">
+                alert("请先登录");
+            </c:if>
+            <c:if test="${sessionScope.user!=null}">
+            document.getElementById("goodsId").value = goodid;
+                document.buy.submit();
+            </c:if>
+            }
+
+        </script>
+
+    </head>
+
+<body>
+
+<!--电影内容页面-->
+<div class="shopping-content w1200">
+    <div class="sp-con-info">
+        <h3 class="sp-info-tit">
+            电影列表
+        </h3>
+
+        <ul class="sp-info-r f-r">
+
+
+            <li th:each="movie : ${movieStat}">
+                    <div class="li-top">
+                        <a href="" th:href="@{'/findMovieById/'+${movie.id}}" class="li-top-tu"><img
+                            style="width: 180px;height: 236px;"	src="" th:src="@{${movie.movie_pic}}"/>
+                        </a>
+                        <p class="jiage">
+                            <span class="sp1" th:text="${movie.movie_price}">￥</span>
+                        </p>
+                    </div>
+                    <p class="miaoshu" th:text="${movie.movie_desc}">
+                        ${goods.goodsName}
+                    </p>
+                </li>
+
+
+
+
+        </ul>
+        <div style="clear: both;"></div>
+    </div>
+
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li>
+                <a href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+
+            <li><a href="#" th:href="@{/findMovieByCatelog2?pageNum=1}">1</a></li>
+            <li><a href="#" th:href="@{/findMovieByCatelog2?pageNum=2}">2</a></li>
+            <li><a href="#" th:href="@{/findMovieByCatelog2?pageNum=3}">3</a></li>
+            <li><a href="#" th:href="@{/findMovieByCatelog2?pageNum=4}">4</a></li>
+            <li><a href="#" th:href="@{/findMovieByCatelog2?pageNum=5}">5</a></li>
+            <li><a href="#" th:href="@{/findMovieByCatelog2?pageNum=6}">6</a></li>
+            <li><a href="#" th:href="@{/findMovieByCatelog2?pageNum=7}">7</a></li>
+            <li><a href="#" th:href="@{/findMovieByCatelog2?pageNum=8}">8</a></li>
+            <li><a href="#" th:href="@{/findMovieByCatelog2?pageNum=9}">9</a></li>
+            <li><a href="#" th:href="@{/findMovieByCatelog2?pageNum=10}">10</a></li>
+            <li>
+                <a href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+
+
+</div>
+<!--底部footer-->
+<footer th:replace="common/footer :: footer">
+</footer>
+</body>
+</html>

@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="pragma" content="no-cache" />
+	<meta http-equiv="cache-control" content="no-cache" />
+	<meta http-equiv="expires" content="0" />
+	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3" />
+	<meta http-equiv="description" content="This is my page" />
+	<link rel="stylesheet" type="text/css"
+		  href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}"/>
+	<link rel="stylesheet" type="text/css" href="<%=path %>/css/base.css" th:href="@{/css/base.css}"/>
+	<script type="text/javascript" src="<%=path %>/js/popup.js" th:src="@{/js/popup.js}"></script>
+	<script language="javascript">
+		function goodsNoTejiaDel(goodsId)
+		{
+			if(confirm('您确定删除吗？'))
+			{
+				window.location.href="<%=path %>/goodsNoTejiaDel.action?goodsId="+goodsId;
+			}
+		}
+
+		function goodsNoTejiaAdd()
+		{
+			var url="/admin/addMovie";
+			//var n="";
+			//var w="480px";
+			//var h="500px";
+			//var s="resizable:no;help:no;status:no;scroll:yes";
+			//openWin(url,n,w,h,s);
+			window.location.href=url;
+		}
+
+		function over(picPath)
+		{
+			if (picPath=="")picPath="/images/default.jpg";
+			x = event.clientX;
+			y = event.clientY;
+			document.all.tip.style.display = "block";
+			document.all.tip.style.top = y;
+			document.all.tip.style.left = x+10;
+			document.all.photo.src = ".."+picPath;
+		}
+		function out()
+		{
+			document.all.tip.style.display = "none";
+		}
+		function xiangqin(goodsId)
+		{
+			var pop=new Popup({ contentType:1,isReloadOnClose:false,width:500,height:400});
+			pop.setContent("contentUrl","<%=path %>/goodsDetailHou.action?goodsId="+goodsId);
+			pop.setContent("title","电影详细介绍");
+			pop.build();
+			pop.show();
+		}
+	</script>
+</head>
+
+<body leftmargin="2" topmargin="2" background='<%=path %>/images/allbg.gif'>
+<table width="98%" border="1" cellpadding="2" cellspacing="1" bgcolor="#D1DDAA" align="center" style="margin-top:8px">
+	<tr bgcolor="#E7E7E7">
+		<td height="14" colspan="10" background="<%=path %>/images/tbg.gif">&nbsp;电影管理&nbsp;</td>
+	</tr>
+	<tr align="center" bgcolor="#FAFAF1" height="22">
+
+		<td width="12%">电影名称</td>
+		<td width="10%">上架状态</td>
+		<td width="12%">分类</td>
+
+		<td width="12%">电影图片</td>
+		<td width="12%">价格</td>
+		<td width="12%">地区</td>
+		<td width="12%">上映时间</td>
+		<td width="12%">操作</td>
+	</tr>
+
+		<tr th:each="movie : ${movieStat}" align='center' bgcolor="#ffc0cb" onMouseMove="javascript:this.bgColor='red';" onMouseOut="javascript:this.bgColor='#FFFFFF';" height="22">
+
+			<td bgcolor="#FFFFFF" align="center" th:text="${movie.movie_name}"></td>
+			<td bgcolor="#FFFFFF" align="center" th:text="${movie.movie_flag}"></td>
+			<td bgcolor="#FFFFFF" align="center" th:text="${movie.movie_catelog_id}"></td>
+			<td bgcolor="#FFFFFF" align="center"><img th:src="@{${movie.movie_pic}}" style="width: 50px;height: 50px;"></td>
+			<td bgcolor="#FFFFFF" align="center" th:text="${movie.movie_price}"></td>
+			<td bgcolor="#FFFFFF" align="center" th:text="${movie.movie_zone_id}"></td>
+			<td bgcolor="#FFFFFF" align="center" th:text="${movie.movie_time}"></td>
+
+			<td bgcolor="#FFFFFF" align="center">
+				<a th:href="@{'/downMovie?id='+${movie.id}}"   class="pn-loperator">下架</a>
+				<a th:href="@{'/upMovie?id='+${movie.id}}"   class="pn-loperator">上架</a>
+				<a th:href="@{'/deleteMovie?id='+${movie.id}}" onclick="goodsNoTejiaDel()" class="pn-loperator">删除</a>
+			</td>
+		</tr>
+
+</table>
+
+<div>
+	<nav aria-label="Page navigation">
+		<ul class="pagination">
+			<li>
+				<a href="#" aria-label="Previous">
+					<span aria-hidden="true">&laquo;</span>
+				</a>
+			</li>
+
+			<li><a href="#" th:href="@{/admin/indexAdmin?pageNum=1}">1</a></li>
+			<li><a href="#" th:href="@{/admin/indexAdmin?pageNum=2}">2</a></li>
+			<li><a href="#" th:href="@{/admin/indexAdmin?pageNum=3}">3</a></li>
+			<li><a href="#" th:href="@{/admin/indexAdmin?pageNum=4}">4</a></li>
+			<li><a href="#" th:href="@{/admin/indexAdmin?pageNum=5}">5</a></li>
+			<li><a href="#" th:href="@{/admin/indexAdmin?pageNum=6}">6</a></li>
+			<li><a href="#" th:href="@{/admin/indexAdmin?pageNum=7}">7</a></li>
+			<li><a href="#" th:href="@{/admin/indexAdmin?pageNum=8}">8</a></li>
+			<li><a href="#" th:href="@{/admin/indexAdmin?pageNum=9}">9</a></li>
+			<li><a href="#" th:href="@{/admin/indexAdmin?pageNum=10}">10</a></li>
+			<li>
+				<a href="#" aria-label="Next">
+					<span aria-hidden="true">&raquo;</span>
+				</a>
+			</li>
+		</ul>
+	</nav>
+</div>
+
+<table width='98%'  border='0'style="margin-top:8px;margin-left: 5px;">
+	<tr>
+		<td>
+			<input type="button" value="添加" style="width: 80px;" onclick="goodsNoTejiaAdd()" />
+		</td>
+	</tr>
+</table>
+<div id="tip" style="position:absolute;display:none;border:0px;width:80px; height:80px;">
+	<TABLE id="tipTable" border="0" bgcolor="#ffffee">
+		<TR align="center">
+			<TD><img id="photo" src="" height="80" width="80"></TD>
+		</TR>
+	</TABLE>
+</div>
+
+
+
+
+</body>
+</html>

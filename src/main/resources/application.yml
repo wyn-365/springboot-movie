@@ -1,0 +1,9 @@
+spring:
+  thymeleaf:
+    mode: HTML
+  datasource:
+    driver-calss-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/movie?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: 123456
+

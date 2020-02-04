@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Movie Ticket Booking Widget Flat Responsive Widget Template :: w3layouts</title>
+    <!-- for-mobile-apps -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="Movie Ticket Booking Widget Responsive, Login form web template, Sign up Web Templates, Flat Web Templates, Login signup Responsive web template, Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+    <!-- //for-mobile-apps -->
+    <link href='//fonts.googleapis.com/css?family=Kotta+One' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+    <link th:href="@{/choose/css/style.css}" rel="stylesheet" type="text/css" media="all" />
+    <script th:src="@{/choose/js/jquery-1.11.0.min.js}" ></script>
+    <script th:src="@{/choose/js/jquery.seat-charts.js}"></script>
+</head>
+<body>
+<div class="content">
+    <h1>Movie Ticket Booking Widget</h1>
+    <div class="main">
+        <h2>影院在线选座订票系统</h2>
+        <div class="demo">
+            <div id="seat-map">
+                <div class="front">电影 屏幕</div>
+            </div>
+            <div class="booking-details">
+                <form action="" th:action="@{/submitOrder}" method="post">
+                <ul class="book-left">
+                    <li>电影: </li>
+                    <li>时间: </li>
+                    <li>影厅:</li>
+                    <li>数量:</li>
+                    <li>总金额:</li>
+                    <li>座位:</li>
+                </ul>
+                <ul class="book-right">
+                    <li th:text="${movieInfo.movie_name}">: Gingerclown</li>
+                    <li th:text="${movieInfo.movie_time}">: April 3, 21:00</li>
+                    <li th:text="${movieInfo.movie_yingting_id}">: 1</li>
+
+                    <li>: <span id="counter">0</span></li>
+                    <li>: <b><i>$</i><span id="total">0</span></b></li>
+                </ul>
+                <div class="clear"></div>
+                <ul id="selected-seats" class="scrollbar scrollbar1"></ul>
+
+                    <!--
+                        设置隐藏域提交表单信息
+                    -->
+                <input type="hidden" name="movieName" th:value="${movieInfo.movie_name}"/>
+                <input type="hidden" name="movieTime" th:value="${movieInfo.movie_time}"/>
+                <input type="hidden" name="movieYingTing" th:value="${movieInfo.movie_yingting_id}"/>
+
+
+                <button class="checkout-button">现在订票</button>
+                <div id="legend"></div>
+                </form>
+            </div>
+            <div style="clear:both"></div>
+        </div>
+        <input type="hidden" th:text="${movieInfo.movie_price}"/>
+        <script type="text/javascript" th:inline="javascript">
+            var price = [[${movieInfo.movie_price}]];; //price
+            $(document).ready(function() {
+                var $cart = $('#selected-seats'), //Sitting Area
+                    $counter = $('#counter'), //Votes
+                    $total = $('#total'); //Total money
+
+
+                var sc = $('#seat-map').seatCharts({
+                    map: [  //Seating chart
+                        'aaaaaaaaaa',
+                        'aaaaaaaaaa',
+                        '__________',
+                        'aaaaaaaa__',
+                        'aaaaaaaaaa',
+                        'aaaaaaaaaa',
+                        'aaaaaaaaaa',
+                        'aaaaaaaaaa',
+                        'aaaaaaaaaa',
+                        '__aaaaaa__'
+                    ],
+                    naming : {
+                        top : false,
+                        getLabel : function (character, row, column) {
+                            return column;
+                        }
+                    },
+                    legend : { //Definition legend
+                        node : $('#legend'),
+                        items : [
+                            [ 'a', 'available',   '可选座位' ],
+                            [ 'a', 'unavailable', '出售座位'],
+                            [ 'a', 'selected', '选中座位']
+                        ]
+                    },
+                    click: function () { //Click event
+                        if (this.status() == 'available') { //optional seat
+                            $('<li>'+(this.settings.row+1)+'排 '+this.settings.label+'列</li>')
+                                .attr('id', 'cart-item-'+this.settings.id)
+                                .data('seatId', this.settings.id)
+                                .appendTo($cart);
+
+                            $counter.text(sc.find('selected').length+1);
+                            $total.text(recalculateTotal(sc)+price);
+
+                            return 'selected';
+                        } else if (this.status() == 'selected') { //Checked
+                            //Update Number
+                            $counter.text(sc.find('selected').length-1);
+                            //update totalnum
+                            $total.text(recalculateTotal(sc)-price);
+
+                            //Delete reservation
+                            $('#cart-item-'+this.settings.id).remove();
+                            //optional
+                            return 'available';
+                        } else if (this.status() == 'unavailable') { //sold
+                            return 'unavailable';
+                        } else {
+                            return this.style();
+                        }
+                    }
+                });
+                //sold seat
+                sc.get(['10_1', '10_2']).status('unavailable');
+
+            });
+            //sum total money
+            function recalculateTotal(sc) {
+                var total = 0;
+                sc.find('selected').each(function () {
+                    total += price;
+                });
+                return total;
+            }
+        </script>
+    </div>
+</div>
+
+
+<script th:src="@{/choose/js/jquery.nicescroll.js}"></script>
+<script th:src="@{/choose/js/scripts.js}"></script>
+</body>
+</html>
